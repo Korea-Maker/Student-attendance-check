@@ -1,10 +1,27 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 const Attendance = () => {
+  const [attendance, setAttendance] = useState([]);
+
+  useEffect(() => {
+    const fetchAttendance = async () => {
+      const token = localStorage.getItem('token');
+      const response = await axios.get('/api/attendance', { headers: { Authorization: `Bearer ${token}` } });
+      setAttendance(response.data);
+    };
+
+    fetchAttendance();
+  }, []);
+
   return (
     <div>
       <h2>Attendance</h2>
-      <p>Manage student attendance here.</p>
+      <ul>
+        {attendance.map((record) => (
+          <li key={record.id}>{record.student_name}: {record.status}</li>
+        ))}
+      </ul>
     </div>
   );
 };
