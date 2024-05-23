@@ -1,19 +1,23 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { login } from '../../services/api';
 
 function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('/api/login', { username, password });
+      const response = await login({ username, password });
       console.log('Login successful:', response.data);
-      // Handle successful login (e.g., redirect to dashboard)
+      // Save token or user info to localStorage
+      // Redirect to dashboard
+      navigate('/dashboard');
     } catch (error) {
       console.error('Login error:', error);
-      // Handle login error (e.g., show error message)
+      alert('Login failed, please try again.');
     }
   };
 

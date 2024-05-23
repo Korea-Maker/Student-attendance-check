@@ -1,23 +1,27 @@
-import React from 'react';
-import { Route, Switch } from 'react-router-dom';
-import Login from './components/Auth/Login';
-import Register from './components/Auth/Register';
-import Dashboard from './components/Dashboard/Dashboard';
-import Attendance from './components/Attendance/Attendance';
-import Schedule from './components/Schedule/Schedule';
+import axios from 'axios';
 
-function App() {
-  return (
-    <div>
-      <Switch>
-        <Route path="/login" component={Login} />
-        <Route path="/register" component={Register} />
-        <Route path="/dashboard" component={Dashboard} />
-        <Route path="/attendance" component={Attendance} />
-        <Route path="/schedule" component={Schedule} />
-      </Switch>
-    </div>
-  );
-}
+const API_BASE_URL = 'http://127.0.0.1:8000/api';  // Replace with your backend URL
 
-export default App;
+export const login = (userData) => {
+  return axios.post(`${API_BASE_URL}/login`, userData);
+};
+
+export const register = (userData) => {
+  return axios.post(`${API_BASE_URL}/register`, userData);
+};
+
+export const fetchAttendance = () => {
+  return axios.get(`${API_BASE_URL}/attendance`);
+};
+
+export const updateAttendance = (attendanceData) => {
+  return axios.post(`${API_BASE_URL}/attendance`, attendanceData);
+};
+
+export const fetchSchedule = () => {
+  return axios.get(`${API_BASE_URL}/schedule`);
+};
+
+export const updateSchedule = (scheduleData) => {
+  return axios.post(`${API_BASE_URL}/schedule`, scheduleData);
+};

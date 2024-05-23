@@ -1,21 +1,24 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { register } from '../../services/api';
 
 function Register() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [role, setRole] = useState('student');
+  const navigate = useNavigate();
 
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('/api/register', { name, email, password, role });
+      const response = await register({ name, email, password, role });
       console.log('Registration successful:', response.data);
-      // Handle successful registration (e.g., redirect to login page)
+      // Redirect to login
+      navigate('/login');
     } catch (error) {
       console.error('Registration error:', error);
-      // Handle registration error (e.g., show error message)
+      alert('Registration failed, please try again.');
     }
   };
 
